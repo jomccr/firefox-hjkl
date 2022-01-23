@@ -7,5 +7,5 @@ navigation so I don't have to use the arrow keys or my mouse to scroll a page.
 
 ## Installation 
 
-You can find the addon page here: https://addons.mozilla.org/en-US/firefox/addon/vim-hjkl/
+You can find the addon page here: https://addons.mozilla.org/firefox/addon/vim-hjkl/
 
