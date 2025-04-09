@@ -1,39 +1,48 @@
-// hjkl.js - a firefox extension that will keep your hand off your mouse.
-
-//document.body.style.border = "15px solid red";
-
 const hjkl = {
-    init: function() {
+    bindings: {
+        up: "k",
+        down: "j",
+        left: "h",
+        right: "l"
+    },
+
+    init: function () {
+        // Load current bindings from storage
+        browser.storage.local.get("bindings").then(result => {
+            if (result.bindings) {
+                hjkl.bindings = result.bindings;
+            }
+        });
+
+        // Listen for storage changes (e.g. from popup)
+        browser.storage.onChanged.addListener((changes, area) => {
+            if (area === "local" && changes.bindings) {
+                hjkl.bindings = changes.bindings.newValue;
+            }
+        });
+
         document.addEventListener("keydown", hjkl.onKeyPress, true);
     },
 
-    keyMap: {
-        // todo : fill out the functions for h and l
-        j_pressed: function() { window.scrollBy(0, 25);  },
-        k_pressed: function() { window.scrollBy(0, -25); },
-        h_pressed: function() { window.scrollBy(-25, 0); },
-        l_pressed: function() { window.scrollBy(25, 0);  }
-    },
+    onKeyPress: function (e) {
+        if (
+            e.target.nodeName === "INPUT" ||
+            e.target.nodeName === "TEXTAREA" ||
+            e.target.isContentEditable
+        ) return;
 
-    onKeyPress: function(e) {
-        let keyString = String.fromCharCode(e.keyCode)
-        //console.log("Found a keypress = " + keyString);
+        const key = e.key.toLowerCase();
 
-        // don't scroll the window if you're in an input field 
-        if (e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA") 
-            return;
-
-        if (keyString === "J") {
-            hjkl.keyMap.j_pressed();
-        } else if (keyString === "K") {
-            hjkl.keyMap.k_pressed();
-        } else if (keyString === "H") {
-            hjkl.keyMap.h_pressed();
-        } else if (keyString === "L") {
-            hjkl.keyMap.l_pressed();
-        } 
+        if (key === hjkl.bindings.down) {
+            window.scrollBy(0, 25);
+        } else if (key === hjkl.bindings.up) {
+            window.scrollBy(0, -25);
+        } else if (key === hjkl.bindings.left) {
+            window.scrollBy(-25, 0);
+        } else if (key === hjkl.bindings.right) {
+            window.scrollBy(25, 0);
+        }
     }
-}
+};
 
-document.onload = hjkl.init();
-
+hjkl.init();

@@ -13,7 +13,7 @@ echo
 echo "Building the zip file..."
 echo
 
-zip -r ./hjkl.zip ./*.js ./icons/*.png ./manifest.json ./LICENSE.txt
+zip -r ./hjkl.zip ./*.js ./*.html ./icons/*.png ./manifest.json ./LICENSE.txt
 
 echo
 echo "Listing the zip file..."
@@ -24,6 +24,3 @@ unzip -l ./hjkl.zip
 echo
 echo "Build complete, sha256: $(md5sum hjkl.zip)"
 echo
-
-
-

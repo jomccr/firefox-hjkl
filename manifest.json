@@ -1,18 +1,21 @@
 {
     "manifest_version": 2,
     "name": "hjkl",
-    "version": "1.0",
-
-    "description": "Adds vim-style hjkl navigation keys to your web browser.",
-
+    "version": "1.1",
+    "description": "Adds vim-style navigation keys to your web browser.",
     "icons": {
         "48": "icons/no_mouse.png"
     },
-
+    "browser_action": {
+        "default_icon": "icons/no_mouse.png",
+        "default_popup": "popup.html",
+        "default_title": "HJKL Settings"
+    },
+    "permissions": ["storage"],
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["hjkl.js"]
+            "js": ["hjkl.js", "popup.js"]
         }
     ]
 }
