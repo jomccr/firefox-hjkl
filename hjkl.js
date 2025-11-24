@@ -9,7 +9,7 @@ const hjkl = {
 
     init: function () {
         // Load current bindings from storage
-        browser.storage.local.get(["bindings, distance"]).then(result => {
+        browser.storage.local.get(["bindings", "distance"]).then(result => {
             if (result.bindings) {
                 hjkl.bindings = result.bindings;
             }
