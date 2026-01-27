@@ -3,16 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const down = document.getElementById("down");
     const left = document.getElementById("left");
     const right = document.getElementById("right");
+    const distance = document.getElementById("distance");
     const save = document.getElementById("save");
     const restore = document.getElementById("restore");
 
     // Load current bindings
-    browser.storage.local.get("bindings").then(result => {
+    browser.storage.local.get(["bindings", "distance"]).then(result => {
       const bindings = result.bindings || { up: "k", down: "j", left: "h", right: "l" };
       up.value = bindings.up;
       down.value = bindings.down;
       left.value = bindings.left;
       right.value = bindings.right;
+
+      const distanceValue = result.distance || 25;
+      distance.value = distanceValue;
     });
 
     save.addEventListener("click", () => {
@@ -23,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         right: right.value.toLowerCase()
       };
 
-      browser.storage.local.set({ bindings }).then(() => {
+      browser.storage.local.set({ bindings, distance: Number(distance.value) }).then(() => {
         window.close(); // 👈 closes the popup
       });
     });
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       down.value = "j";
       left.value = "h";
       right.value = "l";
+      distance.value = 25;
     });
   }
 );
